@@ -1,0 +1,5 @@
+# Reference materials — not our code, don't scan
+.kiro/references/
+
+# Steering docs — Kiro context/instructions, not deployable code
+.kiro/steering/

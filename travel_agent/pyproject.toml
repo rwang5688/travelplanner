@@ -1,0 +1,11 @@
+[project]
+name = "travel-agent"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "bedrock-agentcore",
+    "httpx",
+    "mcp",
+    "strands-agents",
+    "strands-agents-tools",
+]

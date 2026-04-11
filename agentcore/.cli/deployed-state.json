@@ -1,0 +1,76 @@
+{
+  "targets": {
+    "default": {
+      "resources": {
+        "runtimes": {
+          "TravelAgent": {
+            "runtimeId": "travelplanner_TravelAgent-IWFLmB3nGT",
+            "runtimeArn": "arn:aws:bedrock-agentcore:us-east-1:539307129890:runtime/travelplanner_TravelAgent-IWFLmB3nGT",
+            "roleArn": "arn:aws:iam::539307129890:role/AgentCore-travelplanner-d-ApplicationAgentTravelAge-QKbR2aXYCEth"
+          },
+          "HotelsMcp": {
+            "runtimeId": "travelplanner_HotelsMcp-yHOkiH96Mz",
+            "runtimeArn": "arn:aws:bedrock-agentcore:us-east-1:539307129890:runtime/travelplanner_HotelsMcp-yHOkiH96Mz",
+            "roleArn": "arn:aws:iam::539307129890:role/AgentCore-travelplanner-d-ApplicationAgentHotelsMcp-qMv5VwITVaHa"
+          },
+          "FlightsMcp": {
+            "runtimeId": "travelplanner_FlightsMcp-BdeipPGDf6",
+            "runtimeArn": "arn:aws:bedrock-agentcore:us-east-1:539307129890:runtime/travelplanner_FlightsMcp-BdeipPGDf6",
+            "roleArn": "arn:aws:iam::539307129890:role/AgentCore-travelplanner-d-ApplicationAgentFlightsMc-A04Vp4FcgLAP"
+          }
+        },
+        "memories": {
+          "TravelPlannerMemory": {
+            "memoryId": "travelplanner_TravelPlannerMemory-ScppNX94xh",
+            "memoryArn": "arn:aws:bedrock-agentcore:us-east-1:539307129890:memory/travelplanner_TravelPlannerMemory-ScppNX94xh"
+          }
+        },
+        "mcp": {
+          "gateways": {
+            "travel-planner-gateway": {
+              "gatewayId": "travelplanner-travel-planner-gateway-me5u5t9ltj",
+              "gatewayArn": "arn:aws:bedrock-agentcore:us-east-1:539307129890:gateway/travelplanner-travel-planner-gateway-me5u5t9ltj",
+              "gatewayUrl": "https://travelplanner-travel-planner-gateway-me5u5t9ltj.gateway.bedrock-agentcore.us-east-1.amazonaws.com/mcp"
+            }
+          }
+        },
+        "credentials": {
+          "FlightsMcp-oauth": {
+            "credentialProviderArn": "arn:aws:bedrock-agentcore:us-east-1:539307129890:token-vault/default/oauth2credentialprovider/FlightsMcp-oauth",
+            "clientSecretArn": "arn:aws:secretsmanager:us-east-1:539307129890:secret:bedrock-agentcore-identity!default/oauth2/FlightsMcp-oauth-12443bcc-8bzDmr",
+            "callbackUrl": "https://bedrock-agentcore.us-east-1.amazonaws.com/identities/oauth2/callback/d832434e-9c3f-47d2-a8b0-c672a6948089"
+          },
+          "HotelsMcp-oauth": {
+            "credentialProviderArn": "arn:aws:bedrock-agentcore:us-east-1:539307129890:token-vault/default/oauth2credentialprovider/HotelsMcp-oauth",
+            "clientSecretArn": "arn:aws:secretsmanager:us-east-1:539307129890:secret:bedrock-agentcore-identity!default/oauth2/HotelsMcp-oauth-493444a4-6WRum8",
+            "callbackUrl": "https://bedrock-agentcore.us-east-1.amazonaws.com/identities/oauth2/callback/b40f8718-d3af-4460-9f4b-12fcd139391b"
+          },
+          "travel-planner-gateway-oauth": {
+            "credentialProviderArn": "arn:aws:bedrock-agentcore:us-east-1:539307129890:token-vault/default/oauth2credentialprovider/travel-planner-gateway-oauth",
+            "clientSecretArn": "arn:aws:secretsmanager:us-east-1:539307129890:secret:bedrock-agentcore-identity!default/oauth2/travel-planner-gateway-oauth-3b085802-HqdZbT",
+            "callbackUrl": "https://bedrock-agentcore.us-east-1.amazonaws.com/identities/oauth2/callback/9e2c8a3a-e815-445c-aa17-c84246f6c67a"
+          }
+        },
+        "policyEngines": {
+          "policyengine": {
+            "policyEngineId": "travelplanner_policyengine-ai9mlbzsn4",
+            "policyEngineArn": "arn:aws:bedrock-agentcore:us-east-1:539307129890:policy-engine/travelplanner_policyengine-ai9mlbzsn4"
+          }
+        },
+        "policies": {
+          "policyengine/permit_all_tools": {
+            "policyId": "permit_all_tools-vufotcpyg_",
+            "policyArn": "arn:aws:bedrock-agentcore:us-east-1:539307129890:policy-engine/travelplanner_policyengine-ai9mlbzsn4/policy/permit_all_tools-vufotcpyg_",
+            "engineName": "policyengine"
+          },
+          "policyengine/flight_budget_cap": {
+            "policyId": "flight_budget_cap-udme7k0zyv",
+            "policyArn": "arn:aws:bedrock-agentcore:us-east-1:539307129890:policy-engine/travelplanner_policyengine-ai9mlbzsn4/policy/flight_budget_cap-udme7k0zyv",
+            "engineName": "policyengine"
+          }
+        },
+        "stackName": "AgentCore-travelplanner-default"
+      }
+    }
+  }
+}

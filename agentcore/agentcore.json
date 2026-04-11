@@ -1,0 +1,228 @@
+{
+  "$schema": "https://schema.agentcore.aws.dev/v1/agentcore.json",
+  "name": "travelplanner",
+  "version": 1,
+  "managedBy": "CDK",
+  "tags": {
+    "agentcore:created-by": "agentcore-cli",
+    "agentcore:project-name": "travelplanner"
+  },
+  "runtimes": [
+    {
+      "name": "TravelAgent",
+      "build": "CodeZip",
+      "entrypoint": "agent.py",
+      "codeLocation": "./travel_agent/",
+      "runtimeVersion": "PYTHON_3_13",
+      "envVars": [
+        {
+          "name": "PYTHONIOENCODING",
+          "value": "utf-8"
+        }
+      ],
+      "networkMode": "PUBLIC",
+      "protocol": "HTTP"
+    },
+    {
+      "name": "FlightsMcp",
+      "build": "CodeZip",
+      "entrypoint": "server.py",
+      "codeLocation": "./flights_mcp/",
+      "runtimeVersion": "PYTHON_3_13",
+      "envVars": [
+        {
+          "name": "MCP_TRANSPORT",
+          "value": "streamable-http"
+        }
+      ],
+      "networkMode": "PUBLIC",
+      "instrumentation": {
+        "enableOtel": false
+      },
+      "protocol": "MCP",
+      "authorizerType": "CUSTOM_JWT",
+      "authorizerConfiguration": {
+        "customJwtAuthorizer": {
+          "discoveryUrl": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_N1DTHHRla/.well-known/openid-configuration",
+          "allowedClients": [
+            "5un290a8og4tlm1r51uipgjcrv"
+          ],
+          "allowedScopes": [
+            "flights-mcp/access"
+          ]
+        }
+      }
+    },
+    {
+      "name": "HotelsMcp",
+      "build": "CodeZip",
+      "entrypoint": "server.py",
+      "codeLocation": "./hotels_mcp/",
+      "runtimeVersion": "PYTHON_3_13",
+      "envVars": [
+        {
+          "name": "MCP_TRANSPORT",
+          "value": "streamable-http"
+        }
+      ],
+      "networkMode": "PUBLIC",
+      "instrumentation": {
+        "enableOtel": false
+      },
+      "protocol": "MCP",
+      "authorizerType": "CUSTOM_JWT",
+      "authorizerConfiguration": {
+        "customJwtAuthorizer": {
+          "discoveryUrl": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_BmXwsUtyd/.well-known/openid-configuration",
+          "allowedClients": [
+            "4eh5d1trotn92mlrkuteld77gp"
+          ],
+          "allowedScopes": [
+            "hotels-mcp/access"
+          ]
+        }
+      }
+    }
+  ],
+  "memories": [
+    {
+      "name": "TravelPlannerMemory",
+      "eventExpiryDuration": 30,
+      "strategies": [
+        {
+          "type": "SEMANTIC",
+          "namespaces": [
+            "/users/{actorId}/facts"
+          ]
+        },
+        {
+          "type": "SUMMARIZATION",
+          "namespaces": [
+            "/summaries/{actorId}/{sessionId}"
+          ]
+        },
+        {
+          "type": "USER_PREFERENCE",
+          "namespaces": [
+            "/users/{actorId}/preferences"
+          ]
+        }
+      ]
+    }
+  ],
+  "credentials": [
+    {
+      "authorizerType": "OAuthCredentialProvider",
+      "name": "FlightsMcp-oauth",
+      "discoveryUrl": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_N1DTHHRla/.well-known/openid-configuration",
+      "scopes": [
+        "flights-mcp/access"
+      ],
+      "vendor": "CustomOauth2"
+    },
+    {
+      "authorizerType": "OAuthCredentialProvider",
+      "name": "HotelsMcp-oauth",
+      "discoveryUrl": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_BmXwsUtyd/.well-known/openid-configuration",
+      "scopes": [
+        "hotels-mcp/access"
+      ],
+      "vendor": "CustomOauth2"
+    },
+    {
+      "authorizerType": "OAuthCredentialProvider",
+      "name": "travel-planner-gateway-oauth",
+      "discoveryUrl": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_ENRlyj7yg/.well-known/openid-configuration",
+      "scopes": [
+        "travel-agent/access"
+      ],
+      "vendor": "CustomOauth2"
+    }
+  ],
+  "evaluators": [],
+  "onlineEvalConfigs": [],
+  "agentCoreGateways": [
+    {
+      "name": "travel-planner-gateway",
+      "description": "Gateway for travel planner MCP servers",
+      "targets": [
+        {
+          "name": "flights",
+          "targetType": "mcpServer",
+          "toolDefinitions": [
+            {
+              "name": "flights",
+              "description": "Tool for flights",
+              "inputSchema": {
+                "type": "object"
+              }
+            }
+          ],
+          "endpoint": "https://bedrock-agentcore.us-east-1.amazonaws.com/runtimes/arn%3Aaws%3Abedrock-agentcore%3Aus-east-1%3A539307129890%3Aruntime%2Ftravelplanner_FlightsMcp-BdeipPGDf6/invocations",
+          "outboundAuth": {
+            "type": "OAUTH",
+            "credentialName": "FlightsMcp-oauth"
+          }
+        },
+        {
+          "name": "hotels",
+          "targetType": "mcpServer",
+          "toolDefinitions": [
+            {
+              "name": "hotels",
+              "description": "Tool for hotels",
+              "inputSchema": {
+                "type": "object"
+              }
+            }
+          ],
+          "endpoint": "https://bedrock-agentcore.us-east-1.amazonaws.com/runtimes/arn%3Aaws%3Abedrock-agentcore%3Aus-east-1%3A539307129890%3Aruntime%2Ftravelplanner_HotelsMcp-yHOkiH96Mz/invocations",
+          "outboundAuth": {
+            "type": "OAUTH",
+            "credentialName": "HotelsMcp-oauth"
+          }
+        }
+      ],
+      "authorizerType": "CUSTOM_JWT",
+      "authorizerConfiguration": {
+        "customJwtAuthorizer": {
+          "discoveryUrl": "https://cognito-idp.us-east-1.amazonaws.com/us-east-1_ENRlyj7yg/.well-known/openid-configuration",
+          "allowedClients": [
+            "411vlc1lsn3kh0eer61pdsiq00"
+          ],
+          "allowedScopes": [
+            "travel-agent/access"
+          ]
+        }
+      },
+      "enableSemanticSearch": true,
+      "exceptionLevel": "NONE",
+      "policyEngineConfiguration": {
+        "policyEngineName": "policyengine",
+        "mode": "ENFORCE"
+      }
+    }
+  ],
+  "policyEngines": [
+    {
+      "name": "policyengine",
+      "description": "Travel Planner Policy Engine",
+      "policies": [
+        {
+          "name": "permit_all_tools",
+          "description": "Blanket permit for all tools on the travel planner gateway",
+          "statement": "// Blanket permit for all tools on the travel planner gateway\r\npermit (\r\n  principal,\r\n  action,\r\n  resource == AgentCore::Gateway::\"arn:aws:bedrock-agentcore:us-east-1:539307129890:gateway/travelplanner-travel-planner-gateway-me5u5t9ltj\"\r\n);",
+          "sourceFile": "policies/permit_all_tools.cedar",
+          "validationMode": "IGNORE_ALL_FINDINGS"
+        },
+        {
+          "name": "flight_budget_cap",
+          "description": "Permit flight budget searches only when max_price is 1000 or less",
+          "statement": "permit (\r\n  principal,\r\n  action == AgentCore::Action::\"flights___search_flights_by_budget\",\r\n  resource == AgentCore::Gateway::\"arn:aws:bedrock-agentcore:us-east-1:539307129890:gateway/travelplanner-travel-planner-gateway-me5u5t9ltj\"\r\n) when {\r\n  context.input has max_price && context.input.max_price <= 1000\r\n};",
+          "sourceFile": "policies/flight_budget_policy.cedar",
+          "validationMode": "IGNORE_ALL_FINDINGS"
+        }
+      ]
+    }
+  ]
+}

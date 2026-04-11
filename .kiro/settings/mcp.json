@@ -1,0 +1,28 @@
+{
+  "mcpServers": {
+    "flights-mcp": {
+      "command": "python",
+      "args": [
+        "./flights_mcp/server.py"
+      ],
+      "disabled": false,
+      "autoApprove": []
+    },
+    "hotels-mcp": {
+      "command": "python",
+      "args": [
+        "./hotels_mcp/server.py"
+      ],
+      "disabled": false,
+      "autoApprove": []
+    },
+    "travel-planner-gateway": {
+      "url": "https://travelplanner-travel-planner-gateway-me5u5t9ltj.gateway.bedrock-agentcore.us-east-1.amazonaws.com/mcp",
+      "headers": {
+        "Authorization": "Bearer <Bearer Token>"
+      },
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}

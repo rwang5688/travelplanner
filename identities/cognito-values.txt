@@ -1,0 +1,24 @@
+# Cognito OAuth Values - DELETE THIS FILE AFTER THE WORKSHOP
+# Generated on Tue, Apr  7, 2026  9:57:24 PM
+
+==========================================
+Pool Name:      hotels-mcp-pool
+Pool ID:        us-east-1_BmXwsUtyd
+Client ID:      4eh5d1trotn92mlrkuteld77gp
+Discovery URL:  https://cognito-idp.us-east-1.amazonaws.com/us-east-1_BmXwsUtyd/.well-known/openid-configuration
+==========================================
+
+==========================================
+Pool Name:      travel-agent-pool
+Pool ID:        us-east-1_ENRlyj7yg
+Client ID:      411vlc1lsn3kh0eer61pdsiq00
+Discovery URL:  https://cognito-idp.us-east-1.amazonaws.com/us-east-1_ENRlyj7yg/.well-known/openid-configuration
+==========================================
+
+==========================================
+Pool Name:      flights-mcp-pool
+Pool ID:        us-east-1_N1DTHHRla
+Client ID:      5un290a8og4tlm1r51uipgjcrv
+Discovery URL:  https://cognito-idp.us-east-1.amazonaws.com/us-east-1_N1DTHHRla/.well-known/openid-configuration
+==========================================
+
