@@ -1,5 +1,5 @@
 # Cognito OAuth Values - DELETE THIS FILE AFTER THE WORKSHOP
-# Generated on Tue, Apr  7, 2026  9:57:24 PM
+# Generated on Sat Apr 11 06:25:08 UTC 2026
 
 ==========================================
 Pool Name:      hotels-mcp-pool
