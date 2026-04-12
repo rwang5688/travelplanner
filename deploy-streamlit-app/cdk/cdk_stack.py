@@ -222,7 +222,7 @@ class CdkStack(Stack):
             f"{prefix}AgentCorePolicy",
             statements=[
                 iam.PolicyStatement(
-                    actions=["bedrock-agentcore:InvokeRuntime"],
+                    actions=["bedrock-agentcore:InvokeAgentRuntime"],
                     resources=["*"],
                 )
             ],

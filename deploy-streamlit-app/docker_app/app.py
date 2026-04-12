@@ -44,6 +44,18 @@ with st.sidebar:
         st.session_state.messages = []
         st.rerun()
 
+    st.divider()
+    st.markdown("**Sample Prompts**")
+    sample_prompts = [
+        "Plan a 5-day trip to Tokyo from SFO, March 10-15 2026. Budget is $3000. I prefer direct flights.",
+        "Find me the cheapest way to get to Tokyo from LAX next month. I'm on a tight budget.",
+        "Plan a luxury trip to Paris from JFK, March 20-25 2026. Money is not an issue.",
+        "I need to go to London from SFO, March 15-20 2026. Budget is $2500. I prefer direct flights and hotels with a gym.",
+        "Search flights from SFO to TYO on 2026-03-10 with max price 900",
+    ]
+    for p in sample_prompts:
+        st.code(p, language=None)
+
 # Init chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []

@@ -158,7 +158,7 @@ Provisions all AWS resources. Follows the reference implementation pattern with 
 - **ALB** (internet-facing, public subnets)
 - **ALB Listener** with custom header condition routing to ECS, default 403
 - **CloudFront Distribution** (HTTPS redirect, all methods, no cache, custom header injection)
-- **IAM Policy** granting `bedrock-agentcore:InvokeRuntime` on `*`
+- **IAM Policy** granting `bedrock-agentcore:InvokeAgentRuntime` on `*`
 - **Secrets Manager read** grant to task role
 
 **Key difference from reference:** The IAM policy grants `bedrock-agentcore:InvokeRuntime` instead of `bedrock:InvokeModel`, because the container communicates with the TravelAgent via AgentCore runtime, not Bedrock directly.
