@@ -100,12 +100,16 @@ class CdkStack(Stack):
             vpc=vpc,
         )
 
-        # Fargate task definition
+        # Fargate task definition (ARM64 for Graviton-based builds)
         fargate_task_definition = ecs.FargateTaskDefinition(
             self,
             f"{prefix}WebappTaskDef",
             memory_limit_mib=512,
             cpu=256,
+            runtime_platform=ecs.RuntimePlatform(
+                cpu_architecture=ecs.CpuArchitecture.ARM64,
+                operating_system_family=ecs.OperatingSystemFamily.LINUX,
+            ),
         )
 
         # Build Docker image from docker_app/
