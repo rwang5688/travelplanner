@@ -1,7 +1,12 @@
-FROM python:3.12
-EXPOSE 8501
+FROM --platform=linux/arm64 python:3.13-slim
+
 WORKDIR /app
-COPY requirements.txt ./requirements.txt
-RUN pip3 install --upgrade pip && pip3 install -r requirements.txt
+
+RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
-CMD ["streamlit", "run", "app.py"]
+
+EXPOSE 8501
+CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
